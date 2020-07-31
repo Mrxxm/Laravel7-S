@@ -25,3 +25,4 @@ Route::get('/task/test', 'SwooleController@task');
 
 // 事件监听
 Route::get('/event/test', 'SwooleController@event');
+Route::get('/event/test1', 'SwooleController@event1');
