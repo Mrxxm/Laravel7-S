@@ -36,7 +36,7 @@ class EventServiceProvider extends ServiceProvider
             $request->request->set('post_key', 'swoole-post-param-xxm'); // 修改 POST 请求参数
         });
 
-        Event::listen('laravels.generated_response', function (Request $request, Response $response, $app) {
+        Event::listen('laravels.generated_response', function (Request $request, \Symfony\Component\HttpFoundation\Response $response, $app) {
             $response->headers->set('header-key', 'swoole-header-xxm');
         });
     }
