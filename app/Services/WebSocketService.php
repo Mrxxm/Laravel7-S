@@ -38,7 +38,7 @@ class WebSocketService implements WebSocketHandlerInterface
     public function onMessage(Server $server, Frame $frame)
     {
         // 调用 push 方法向客户端推送数据
-        var_dump($frame);
+//        var_dump($frame);
         $server->push($frame->fd, '这是一条来自后台WebSocket服务器推送的消息 ' . date('Y-m-d H:i:s'));
     }
 
