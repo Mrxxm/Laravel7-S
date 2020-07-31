@@ -21,6 +21,11 @@ return [
     'event_handlers'           => [
         'WorkerStart' => \App\Listeners\WorkerStartEventListener::class,
     ],
+    'events' => [
+        \App\Events\TestEvent::class => [
+            \App\Listeners\TestEventListener::class,
+        ]
+    ],
     'websocket'                => [
         'enable' => true,
         'handler' => \App\Services\WebSocketService::class,
@@ -92,9 +97,5 @@ return [
          * @see https://www.swoole.co.uk/docs/modules/swoole-server/configuration  English
          */
     ],
-    'events' => [
-        \App\Events\TestEvent::class => [
-            \App\Listeners\TestEventListener::class,
-        ]
-    ],
+
 ];
