@@ -20,4 +20,14 @@ class SwooleController
             }
         }, $count);
     }
+
+    public function task(Request $request)
+    {
+        $task = new \App\Jobs\Task\TestTask('异步任务1');
+        $success = \Hhxsv5\LaravelS\Swoole\Task\Task::deliver($task);  // 异步投递任务，触发调用任务类的 handle 方法
+
+        $data = ['task' => 'success'];
+        return json($data);
+    }
+
 }
