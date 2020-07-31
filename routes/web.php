@@ -16,3 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// 定时器
+Route::get('/timer/test', 'SwooleController@timer');
