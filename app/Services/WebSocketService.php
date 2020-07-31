@@ -23,14 +23,14 @@ class WebSocketService implements WebSocketHandlerInterface
         // 调用 push 方法向客户端推送数据，fd 是客户端连接标识字段
 //        Log::info('WebSocket 连接建立');
         echo 'WebSocket 连接建立';
-        $server->push($request->fd, 'Welcome to WebSocket Server built on LaravelS');
+        $server->push($request->fd, '欢迎与LaravelS-WebSocket服务建立连接');
     }
 
     // 收到消息时触发
     public function onMessage(Server $server, Frame $frame)
     {
         // 调用 push 方法向客户端推送数据
-        $server->push($frame->fd, 'This is a message sent from WebSocket Server at ' . date('Y-m-d H:i:s'));
+        $server->push($frame->fd, '这是一条来自后台WebSocket服务器推送的消息 ' . date('Y-m-d H:i:s'));
     }
 
     // 关闭连接时触发
