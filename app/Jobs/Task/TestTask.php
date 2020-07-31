@@ -24,7 +24,7 @@ class TestTask extends Task
 //        Log::info(__CLASS__ . ': 开始处理任务', [$this->data]);
         //  todo 耗时任务具体处理逻辑在这里编写
         sleep(3); // 模拟任务需要3秒才能执行完毕
-        $this->result = 'The result of ' . $this->data . ' is balabalabala';
+        $this->result = 'The result of ' . $this->data . ' is balabalabala' . "\n";
     }
 
     // 任务完成调用 finish 回调时触发，等同于 Swoole 中的 onFinish 逻辑
