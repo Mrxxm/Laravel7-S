@@ -92,4 +92,9 @@ return [
          * @see https://www.swoole.co.uk/docs/modules/swoole-server/configuration  English
          */
     ],
+    'events' => [
+        \App\Events\TestEvent::class => [
+            \App\Listeners\TestEventListener::class,
+        ]
+    ],
 ];
