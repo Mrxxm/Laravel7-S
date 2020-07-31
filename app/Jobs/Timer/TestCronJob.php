@@ -12,14 +12,14 @@ class TestCronJob extends CronJob
     // 该方法可类比为 Swoole 定时器中的回调方法
     public function run()
     {
-        echo __METHOD__ . ': ' .  'start-' . $this->i . microtime(true) . "\n";
+        echo __METHOD__ . ': ' .  'start-' . $this->i . '-' . microtime(true) . "\n";
 //        Log::info(__METHOD__, ['start', $this->i, microtime(true)]);
         $this->i++;
-        echo __METHOD__ . ': ' .  'end-' . $this->i . microtime(true) . "\n";
+        echo __METHOD__ . ': ' .  'end-' . $this->i . '-' . microtime(true) . "\n";
 //        Log::info(__METHOD__, ['end', $this->i, microtime(true)]);
 
         if ($this->i == 3) { // 总共运行3次
-            echo __METHOD__ . ': ' .  'stop-' . $this->i . microtime(true) . "\n";
+            echo __METHOD__ . ': ' .  'stop-' . $this->i . '-' . microtime(true) . "\n";
 //            Log::info(__METHOD__, ['stop', $this->i, microtime(true)]);
             $this->stop(); // 清除定时器
         }
