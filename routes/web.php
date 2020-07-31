@@ -22,3 +22,6 @@ Route::get('/timer/test', 'SwooleController@timer');
 
 // 异步task任务
 Route::get('/task/test', 'SwooleController@task');
+
+// 事件监听
+Route::get('/event/test', 'SwooleController@event');
