@@ -30,4 +30,11 @@ class SwooleController
         return json($data);
     }
 
+    public function event(Request $request)
+    {
+        $data = $request->all();
+
+        return json($data);
+    }
+
 }
