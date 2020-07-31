@@ -37,4 +37,16 @@ class SwooleController
         return json($data);
     }
 
+    public function event1(Request $request)
+    {
+        $event = new \App\Events\TestEvent('测试异步事件监听及处理');
+
+        $listener = $event->getListeners();
+
+        $success = \Hhxsv5\LaravelS\Swoole\Task\Event::fire($event);
+
+        $data = ['event' => $success];
+        return json($data);
+    }
+
 }
