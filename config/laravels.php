@@ -18,7 +18,9 @@ return [
         'excluded_dirs' => [],
         'log'           => true,
     ],
-    'event_handlers'           => [],
+    'event_handlers'           => [
+        'WorkerStart' => \App\Listeners\WorkerStartEventListener::class,
+    ],
     'websocket'                => [
         'enable' => true,
         'handler' => \App\Services\WebSocketService::class,
