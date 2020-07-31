@@ -19,3 +19,6 @@ Route::get('/', function () {
 
 // 定时器
 Route::get('/timer/test', 'SwooleController@timer');
+
+// 异步task任务
+Route::get('/task/test', 'SwooleController@task');
