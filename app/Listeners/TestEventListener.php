@@ -9,9 +9,12 @@ use Illuminate\Support\Facades\Log;
 
 class TestEventListener extends Listener
 {
+    protected $event = null;
+
     public function __construct(Event $event)
     {
         parent::__construct($event);
+        $this->event = $event;
     }
 
     public function handle()
