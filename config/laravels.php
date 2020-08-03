@@ -20,12 +20,13 @@ return [
     ],
     'event_handlers'           => [
         'WorkerStart' => \App\Listeners\WorkerStartEventListener::class,
+        'events' => [
+            \App\Events\TestEvent::class => [
+                \App\Listeners\TestEventListener::class,
+            ]
+        ],
     ],
-    'events' => [
-        \App\Events\TestEvent::class => [
-            \App\Listeners\TestEventListener::class,
-        ]
-    ],
+
     'websocket'                => [
         'enable' => true,
         'handler' => \App\Services\WebSocketService::class,
