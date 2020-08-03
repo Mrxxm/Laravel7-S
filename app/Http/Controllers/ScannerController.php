@@ -13,7 +13,7 @@ class ScannerController
     {
         $urls = [
             'www.baidu.com',
-            'www.baidddddd'.com,
+            'www.baidddddd.com',
             'www.qq.com'
         ];
 
