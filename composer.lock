@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0975f5c85ccfcbbf7fbfcbb7e307a5ae",
+    "content-hash": "da257a6ad81ddee3dfa26bfbbcf1a5aa",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1339,6 +1339,86 @@
                 "psr-3"
             ],
             "time": "2020-07-23T08:41:23+00:00"
+        },
+        {
+            "name": "mrxxm/scanner",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Mrxxm/Packahes2.git",
+                "reference": "0ba95c4f87dc49d336b1aaf094e135d6bc9728e9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Mrxxm/Packahes2/zipball/0ba95c4f87dc49d336b1aaf094e135d6bc9728e9",
+                "reference": "0ba95c4f87dc49d336b1aaf094e135d6bc9728e9",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "guzzlehttp/guzzle": "~6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Mrxxm\\Scanner\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mrxxm",
+                    "email": "362190221@qq.com"
+                }
+            ],
+            "description": "TEST",
+            "time": "2020-08-03T10:04:01+00:00"
+        },
+        {
+            "name": "mrxxm/urlscanner",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Mrxxm/Packages.git",
+                "reference": "60bb6b9a387733d3adb9d1ca4dd7eeae97a01c9e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Mrxxm/Packages/zipball/60bb6b9a387733d3adb9d1ca4dd7eeae97a01c9e",
+                "reference": "60bb6b9a387733d3adb9d1ca4dd7eeae97a01c9e",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "guzzlehttp/guzzle": "~6.0",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mrxxm",
+                    "email": "362190221@qq.com"
+                }
+            ],
+            "description": "Scanner Test",
+            "time": "2020-08-03T09:06:22+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -4548,16 +4628,16 @@
         },
         {
             "name": "facade/ignition",
-            "version": "2.3.4",
+            "version": "2.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facade/ignition.git",
-                "reference": "87335b120bc9652e4ee2bf285b7322a785211476"
+                "reference": "58dc4a8df3d41174c677a370b6779b694e4539e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facade/ignition/zipball/87335b120bc9652e4ee2bf285b7322a785211476",
-                "reference": "87335b120bc9652e4ee2bf285b7322a785211476",
+                "url": "https://api.github.com/repos/facade/ignition/zipball/58dc4a8df3d41174c677a370b6779b694e4539e7",
+                "reference": "58dc4a8df3d41174c677a370b6779b694e4539e7",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -4622,7 +4702,7 @@
                 "laravel",
                 "page"
             ],
-            "time": "2020-07-27T15:17:39+00:00"
+            "time": "2020-08-01T21:20:01+00:00"
         },
         {
             "name": "facade/ignition-contracts",
@@ -6643,7 +6723,10 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "mrxxm/scanner": 20,
+        "mrxxm/urlscanner": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

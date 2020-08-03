@@ -104,6 +104,8 @@
       <path value="$PROJECT_DIR$/vendor/psy/psysh" />
       <path value="$PROJECT_DIR$/vendor/hhxsv5/laravel-s" />
       <path value="$PROJECT_DIR$/vendor/swoole/ide-helper" />
+      <path value="$PROJECT_DIR$/vendor/mrxxm/urlscanner" />
+      <path value="$PROJECT_DIR$/vendor/mrxxm/scanner" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.2" />
