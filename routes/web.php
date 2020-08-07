@@ -29,3 +29,9 @@ Route::get('/event/test1', 'SwooleController@event1');
 
 // 自定义组件-扫描
 Route::get('/scanner/index', 'ScannerController@index');
+
+// 异步mysql客户端
+Route::get('/mysql/index', 'SwooleController@mysql');
+// 异步redis客户daunt
+Route::get('/redis/index', 'SwooleController@redis');
+
