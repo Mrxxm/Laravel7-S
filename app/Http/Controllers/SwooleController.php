@@ -4,7 +4,10 @@
 namespace App\Http\Controllers;
 
 
+use Co\MySQL;
+use Illuminate\Database\MySqlConnection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SwooleController
 {
@@ -47,6 +50,22 @@ class SwooleController
 
         $data = ['event' => $success];
         return json($data);
+    }
+
+    public function mysql(Request $request)
+    {
+        \Swoole\Runtime::enableCoroutine(true);
+        echo 1;
+        go(function () {
+
+            $ret = DB::table('banner')
+                ->where('id', 1)
+                ->get();
+
+            echo print_r($ret);
+//            return response()->json(print_r($ret));
+        });
+        echo 2;
     }
 
 }
