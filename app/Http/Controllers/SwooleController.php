@@ -9,6 +9,7 @@ use Co\MySQL;
 use Illuminate\Database\MySqlConnection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Swoole\Coroutine;
 
 class SwooleController
 {
@@ -140,6 +141,70 @@ class SwooleController
         }
 
         return $chatId;
+    }
+
+    public function mysqlCo(Request $request)
+    {
+        \Swoole\Runtime::enableCoroutine(true);
+        $channel = new \Swoole\Coroutine\Channel(4);
+        $results = [];
+        $results[] = strtotime("now").'S';
+
+       go(function () use ($channel,&$results){
+//            $c=file_get_contents('http://www.baidu.com');
+           $mysql=new \Swoole\Coroutine\Mysql();
+           $mysql->connect(
+               [
+                   'database' => env('DB_DATABASE'),
+                   'host' => env('DB_HOST'),
+                   'port' => env('DB_PORT'),
+                   'user' => env('DB_USERNAME'),
+                   'password' => env('DB_PASSWORD')
+               ]
+           );
+            $b=$mysql->query("Select UNIX_TIMESTAMP() as time");
+            $mysql->close();
+            $channel->push($b);
+
+        });
+
+        go(function () use ($channel,&$results){
+//            $c=file_get_contents('http://www.google.com');
+            $mysql=new \Swoole\Coroutine\Mysql();
+            $mysql->connect(
+                [
+                    'database' => env('DB_DATABASE'),
+                    'host' => env('DB_HOST'),
+                    'port' => env('DB_PORT'),
+                    'user' => env('DB_USERNAME'),
+                    'password' => env('DB_PASSWORD')
+                ]
+            );
+            $b=$mysql->query("Select UNIX_TIMESTAMP() as time");
+            $mysql->close();
+            $channel->push($b);
+        });
+
+        $results[] = strtotime("now").'SEnd';
+        for ($i = 0; $i < 2; $i++) {
+            $results[] = $channel->pop();
+        }
+        return json_encode($results);
+    }
+
+    public function coRun()
+    {
+        \Swoole\Runtime::enableCoroutine(true);
+        \Co\run(function () {
+            go(function() {
+                var_dump(file_get_contents("http://www.xinhuanet.com/"));
+            });
+
+            go(function() {
+                \Co::sleep(1);
+                echo "done\n";
+            });
+        });
     }
 
 }
