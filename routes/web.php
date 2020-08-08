@@ -43,3 +43,5 @@ Route::get('/chat/index', 'SwooleController@chat');
 Route::get('/mysql/co', 'SwooleController@mysqlCo');
 
 Route::get('/co/run', 'SwooleController@coRun');
+
+Route::any('/api/user/login', 'LoginController@login');
