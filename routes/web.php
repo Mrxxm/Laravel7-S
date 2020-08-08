@@ -39,3 +39,7 @@ Route::get('/redis/index', 'SwooleController@redis');
 Route::get('/mysql/dxt', 'SwooleController@dxtMysql');
 
 Route::get('/chat/index', 'SwooleController@chat');
+
+Route::get('/mysql/co', 'SwooleController@mysqlCo');
+
+Route::get('/co/run', 'SwooleController@coRun');
