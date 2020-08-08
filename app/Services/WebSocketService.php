@@ -4,10 +4,13 @@
 namespace App\Services;
 
 use Hhxsv5\LaravelS\Swoole\WebSocketHandlerInterface;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Swoole\Http\Request;
 use Swoole\WebSocket\Frame;
 use Swoole\WebSocket\Server;
+
+//\Swoole\Runtime::enableCoroutine(true);
 
 class WebSocketService implements WebSocketHandlerInterface
 {
@@ -24,6 +27,30 @@ class WebSocketService implements WebSocketHandlerInterface
 //        Log::info('WebSocket 连接建立');
         echo "WebSocket 连接建立\n";
         $server->push($request->fd, '欢迎与LaravelS-WebSocket服务建立连接');
+
+        $chatId = $request->get['chatId'];
+
+        $redis = new \Redis();
+        $redis->connect('127.0.0.1',6379);//连接redis
+
+        $chats = $redis->get("Swoole:chat");
+        $chats = json_decode($chats,true);
+        if (empty($chats)) {
+            echo 1;
+            $chats = [];
+            $chats[] = [
+                'fds'     => [$request->fd],
+                'chatId' => $chatId
+            ];
+        } else {
+            echo 2;
+            foreach ($chats as &$chat) {
+                if ($chat['chatId'] == $chatId) {
+                    $chat['fds'] = array_merge($chat['fds'], [$request->fd]);
+                }
+            }
+        }
+        $redis->set('Swoole:chat',json_encode($chats));
     }
 
     // 收到消息时触发
@@ -37,15 +64,103 @@ class WebSocketService implements WebSocketHandlerInterface
      */
     public function onMessage(Server $server, Frame $frame)
     {
-        // 调用 push 方法向客户端推送数据
-//        var_dump($frame);
-        $server->push($frame->fd, '这是一条来自后台WebSocket服务器推送的消息 ' . date('Y-m-d H:i:s'));
+        $data = explode(',', $frame->data);
+        if (count($data) != 3) {
+            return ;
+        }
+        $userId =  $data[0];
+        $tUserId =  $data[1];
+        $msg = 'hello';
+        if (empty($userId) || empty($tUserId)) {
+            return ;
+        }
+        $chatId = $this->getChatId($userId, $tUserId);
+        if (empty($chatId)) {
+            return ;
+        }
+
+        $data = [
+            'userId'  => $userId,
+            'tUserId' => $tUserId,
+            'msg'     => $data[2],
+            'chatId'  => $chatId
+        ];
+
+        $res = [
+            'userid' => $userId,
+            'msg' => $data['msg'],
+        ];
+
+        $redis = new \Redis();
+        $redis->connect('127.0.0.1',6379);//连接redis
+        $chats = $redis->get("Swoole:chat");
+        $chats = json_decode($chats,true);
+
+        $fds = [];
+        foreach ($chats as $chat) {
+            if ($chat['chatId'] == $chatId) {
+                $fds = $chat['fds'];
+            }
+        }
+
+        if (!empty($fds)) {
+            foreach ($fds as $fd) {
+                if ($server->isEstablished($fd)) {
+                    $server->push($fd, json_encode($res)); // 服务端通过 push 方法向所有连接的客户端发送数据
+                }
+            }
+        }
+
+        $task = new \App\Jobs\Task\ChatTask($data);
+        $success = \Hhxsv5\LaravelS\Swoole\Task\Task::deliver($task);
     }
 
     // 关闭连接时触发
     public function onClose(Server $server, $fd, $reactorId)
     {
         echo "WebSocket 连接关闭\n";
-//        Log::info('WebSocket 连接关闭');
+        $redis = new \Redis();
+        $redis->connect('127.0.0.1',6379);//连接redis
+        $chats = $redis->get("Swoole:chat");
+        $chats = json_decode($chats,true);
+
+        foreach ($chats as $num => &$chat) {
+            if (in_array($fd, $chat['fds'])) {
+                foreach ($chat['fds'] as $key => $value) {
+                    if ($fd == $value) {
+                        unset($chat['fds'][$key]);
+                    }
+                }
+            }
+            if (empty($chat['fds'])) {
+                unset($chats[$num]);
+            }
+        }
+        $redis->set("Swoole:chat", json_encode($chats));
     }
+
+    public function getChatId($userId, $tUserId)
+    {
+        $ins = [
+            'userid' => $userId,
+            't_userid' => $tUserId
+        ];
+        $result = DB::table('destoon_xcx_roomchat')
+            ->where(function ($query) use($ins) {
+                $query->where('userid',$ins['userid'])->where('t_userid',$ins['t_userid']);
+            })
+            ->orWhere(function($query) use($ins) {
+                $query->where('userid',$ins['t_userid'])->where('t_userid',$ins['userid']);
+            })
+            ->orderby('create_time','desc')
+            ->first();
+        if (!$result){
+            $chatId = DB::table('destoon_xcx_roomchat')->insertGetId($ins);
+        }else{
+            $chatId = $result->id;
+        }
+
+        return $chatId;
+    }
+
 }
