@@ -12,7 +12,7 @@
         input.focus();
 
         // 初始化客户端套接字并建立连接
-        var socket = new WebSocket("ws://laravels.com/ws");
+        var socket = new WebSocket("ws://192.168.31.20/ws?chatId=20333");
 
         // 连接建立时触发
         socket.onopen = function (event) {
@@ -36,6 +36,10 @@
 
         input.onchange = function () {
             var msg = nick + ": " + input.value;
+            var data = {
+                userid : 215363,
+                t_userid : 902,
+            };
             // 将输入框变更信息通过 send 方法发送到服务器
             socket.send(msg);
             input.value = "";
