@@ -25,7 +25,7 @@ class WebSocketService implements WebSocketHandlerInterface
         // 在触发 WebSocket 连接建立事件之前，Laravel 应用初始化的生命周期已经结束，你可以在这里获取 Laravel 请求和会话数据
         // 调用 push 方法向客户端推送数据，fd 是客户端连接标识字段
 //        Log::info('WebSocket 连接建立');
-        echo "WebSocket 连接建立\n";
+        echo $request->fd . "WebSocket 连接建立\n";
         $server->push($request->fd, '欢迎与LaravelS-WebSocket服务建立连接');
 
         $chatId = $request->get['chatId'];
@@ -36,14 +36,12 @@ class WebSocketService implements WebSocketHandlerInterface
         $chats = $redis->get("Swoole:chat");
         $chats = json_decode($chats,true);
         if (empty($chats)) {
-            echo 1;
             $chats = [];
             $chats[] = [
                 'fds'     => [$request->fd],
                 'chatId' => $chatId
             ];
         } else {
-            echo 2;
             foreach ($chats as &$chat) {
                 if ($chat['chatId'] == $chatId) {
                     $chat['fds'] = array_merge($chat['fds'], [$request->fd]);
@@ -118,7 +116,7 @@ class WebSocketService implements WebSocketHandlerInterface
     // 关闭连接时触发
     public function onClose(Server $server, $fd, $reactorId)
     {
-        echo "WebSocket 连接关闭\n";
+        echo $fd . "WebSocket 连接关闭\n";
         $redis = new \Redis();
         $redis->connect('127.0.0.1',6379);//连接redis
         $chats = $redis->get("Swoole:chat");
