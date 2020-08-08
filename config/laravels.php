@@ -4,7 +4,7 @@
  * @see https://github.com/hhxsv5/laravel-s/blob/master/Settings.md  English
  */
 return [
-    'listen_ip'                => env('LARAVELS_LISTEN_IP', '127.0.0.1'),
+    'listen_ip'                => env('LARAVELS_LISTEN_IP', '192.168.31.20'),
     'listen_port'              => env('LARAVELS_LISTEN_PORT', 5200),
     'socket_type'              => defined('SWOOLE_SOCK_TCP') ? SWOOLE_SOCK_TCP : 1,
     'enable_coroutine_runtime' => false,
@@ -20,11 +20,11 @@ return [
     ],
     'event_handlers'           => [
         'WorkerStart' => \App\Listeners\WorkerStartEventListener::class,
-        'events' => [
-            \App\Events\TestEvent::class => [
-                \App\Listeners\TestEventListener::class,
-            ]
-        ],
+    ],
+    'events' => [
+        \App\Events\TestEvent::class => [
+            \App\Listeners\TestEventListener::class,
+        ]
     ],
 
     'websocket'                => [
