@@ -35,3 +35,7 @@ Route::get('/mysql/index', 'SwooleController@mysql');
 // 异步redis客户daunt
 Route::get('/redis/index', 'SwooleController@redis');
 
+// mysql连接测试库
+Route::get('/mysql/dxt', 'SwooleController@dxtMysql');
+
+Route::get('/chat/index', 'SwooleController@chat');
