@@ -145,45 +145,56 @@ class SwooleController
 
     public function mysqlCo(Request $request)
     {
+        DB::select('select sleep(3)');
+       return $this->co($request);
+    }
+
+    public function co($request)
+    {
+//        DB::select('select sleep(3)');
         \Swoole\Runtime::enableCoroutine(true);
         $channel = new \Swoole\Coroutine\Channel(4);
         $results = [];
         $results[] = strtotime("now").'S';
 
-       go(function () use ($channel,&$results){
-//            $c=file_get_contents('http://www.baidu.com');
-           $mysql=new \Swoole\Coroutine\Mysql();
-           $mysql->connect(
-               [
-                   'database' => env('DB_DATABASE'),
-                   'host' => env('DB_HOST'),
-                   'port' => env('DB_PORT'),
-                   'user' => env('DB_USERNAME'),
-                   'password' => env('DB_PASSWORD')
-               ]
-           );
-            $b=$mysql->query("Select UNIX_TIMESTAMP() as time");
-            $mysql->close();
-            $channel->push($b);
+        for($i = 0; $i < 2; $i++) {
 
-        });
+            go(function () use ($channel, &$results) {
+                //            $c=file_get_contents('http://www.baidu.com');
+                $mysql = new \Swoole\Coroutine\Mysql();
+                $mysql->connect(
+                    [
+                        'database' => env('DB_DATABASE'),
+                        'host' => env('DB_HOST'),
+                        'port' => env('DB_PORT'),
+                        'user' => env('DB_USERNAME'),
+                        'password' => env('DB_PASSWORD')
+                    ]
+                );
+                $mysql->query("Select UNIX_TIMESTAMP() as time");
+                $b = $mysql->query("Select UNIX_TIMESTAMP() as time");
+                $mysql->close();
+                $channel->push($b);
 
-        go(function () use ($channel,&$results){
-//            $c=file_get_contents('http://www.google.com');
-            $mysql=new \Swoole\Coroutine\Mysql();
-            $mysql->connect(
-                [
-                    'database' => env('DB_DATABASE'),
-                    'host' => env('DB_HOST'),
-                    'port' => env('DB_PORT'),
-                    'user' => env('DB_USERNAME'),
-                    'password' => env('DB_PASSWORD')
-                ]
-            );
-            $b=$mysql->query("Select UNIX_TIMESTAMP() as time");
-            $mysql->close();
-            $channel->push($b);
-        });
+            });
+        }
+
+//        go(function () use ($channel,&$results){
+////            $c=file_get_contents('http://www.google.com');
+//            $mysql=new \Swoole\Coroutine\Mysql();
+//            $mysql->connect(
+//                [
+//                    'database' => env('DB_DATABASE'),
+//                    'host' => env('DB_HOST'),
+//                    'port' => env('DB_PORT'),
+//                    'user' => env('DB_USERNAME'),
+//                    'password' => env('DB_PASSWORD')
+//                ]
+//            );
+//            $b=$mysql->query("Select UNIX_TIMESTAMP() as time");
+//            $mysql->close();
+//            $channel->push($b);
+//        });
 
         $results[] = strtotime("now").'SEnd';
         for ($i = 0; $i < 2; $i++) {
