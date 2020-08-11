@@ -45,3 +45,6 @@ Route::get('/mysql/co', 'SwooleController@mysqlCo');
 Route::get('/co/run', 'SwooleController@coRun');
 
 Route::any('/user/login', 'LoginController@login');
+
+Route::any('/co/add', 'SwooleController@add');
+Route::any('/co/add1', 'SwooleController@add1');
