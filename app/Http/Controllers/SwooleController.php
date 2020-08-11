@@ -218,4 +218,40 @@ class SwooleController
         });
     }
 
+    public function add()
+    {
+        $channel = new \Swoole\Coroutine\Channel(10);
+        for ($i = 0; $i < 10; $i++) {
+            go( function () use ($i, $channel) {
+                $res = 1 + $i;
+                $msg =  '1 ' . '+ ' . $i . ' = ' . $res . "\n";
+                echo $msg;
+                Coroutine::sleep(1);
+                $channel->push($msg);
+            });
+
+        }
+
+        $results = [];
+        for ($i = 0; $i < 10; $i++) {
+            $results[] = $channel->pop();
+        }
+
+        return json($results);
+    }
+
+    public function add1()
+    {
+        $results = [];
+        for ($i = 0; $i < 10; $i++) {
+            $res = 1 + $i;
+            $msg =  '1 ' . '+ ' . $i . ' = ' . $res . "\n";
+            sleep(1);
+            echo $msg;
+            $results[] = $msg;
+
+        }
+
+        return json($results);
+    }
 }
