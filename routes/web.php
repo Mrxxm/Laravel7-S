@@ -48,3 +48,10 @@ Route::any('/user/login', 'LoginController@login');
 
 Route::any('/co/add', 'SwooleController@add');
 Route::any('/co/add1', 'SwooleController@add1');
+
+Route::any('/mysql/test', 'SwooleController@mysqlTest');
+
+
+// webSock
+Route::any('/webSocket/push', 'WebSocketController@push');
+
