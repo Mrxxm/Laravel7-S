@@ -254,4 +254,51 @@ class SwooleController
 
         return json($results);
     }
+
+    public function mysqlTest()
+    {
+        $channel = new \Swoole\Coroutine\Channel(4);
+
+        go(function () use ($channel) {
+            $a = DB::table('destoon_member')
+                ->limit(10)
+                ->get();
+//            $mysql = new \Swoole\Coroutine\Mysql();
+//            $mysql->connect(
+//                [
+//                    'database' => env('DB_DATABASE'),
+//                    'host' => env('DB_HOST'),
+//                    'port' => env('DB_PORT'),
+//                    'user' => env('DB_USERNAME'),
+//                    'password' => env('DB_PASSWORD')
+//                ]
+//            );
+//            $a = $mysql->query("Select * from `destoon_member` limit 10");
+            $channel->push($a);
+        });
+
+        go(function () use ($channel) {
+            $a = DB::table('destoon_member')
+                ->limit(10)
+                ->get();
+//            $mysql = new \Swoole\Coroutine\Mysql();
+//            $mysql->connect(
+//                [
+//                    'database' => env('DB_DATABASE'),
+//                    'host' => env('DB_HOST'),
+//                    'port' => env('DB_PORT'),
+//                    'user' => env('DB_USERNAME'),
+//                    'password' => env('DB_PASSWORD')
+//                ]
+//            );
+//            $a = $mysql->query("Select * from `destoon_member` limit 10");
+            $channel->push($a);
+        });
+
+        $result = [];
+        for ($i = 0; $i < 2; $i++) {
+            $result[] = $channel->pop();
+        }
+        var_dump($result);
+    }
 }
