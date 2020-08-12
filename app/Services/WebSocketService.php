@@ -44,7 +44,12 @@ class WebSocketService implements WebSocketHandlerInterface
         } else {
             foreach ($chats as &$chat) {
                 if ($chat['chatId'] == $chatId) {
-                    $chat['fds'] = array_merge($chat['fds'], [$request->fd]);
+                    $chat['fds'] = array_unique(array_merge($chat['fds'], [$request->fd]));
+                } else {
+                    $chats[] = [
+                        'fds'     => [$request->fd],
+                        'chatId' => $chatId
+                    ];
                 }
             }
         }
