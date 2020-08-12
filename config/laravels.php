@@ -31,7 +31,18 @@ return [
         'enable' => true,
         'handler' => \App\Services\WebSocketService::class,
     ],
-    'sockets'                  => [],
+    'sockets' => [
+        [
+            'host'     => '192.168.31.20',
+            'port'     => 5201,
+            'type'     => SWOOLE_SOCK_TCP,
+            'settings' => [
+                'open_http_protocol'      => true,
+                'open_websocket_protocol' => true,
+            ],
+            'handler'  => \App\Sockets\WebSocket::class,
+        ],
+    ],
     'processes'                => [
         //[
         //    'class'    => \App\Processes\TestProcess::class,
