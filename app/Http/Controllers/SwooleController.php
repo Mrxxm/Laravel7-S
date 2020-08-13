@@ -301,4 +301,43 @@ class SwooleController
         }
         var_dump($result);
     }
+
+    public function channel()
+    {
+        $chan = new \Swoole\Coroutine\Channel(1);
+//        go(function() use ($chan){
+        $wg = new \Swoole\Coroutine\WaitGroup();
+
+            go(function () use ($chan, $wg) {
+                for($i = 0; $i < 3; $i++) {
+                    Coroutine::sleep(1.0);
+                    $chan->push(['rand' => rand(1000, 9999), 'index' => $i]);
+                    echo "$i\n";
+                }
+            });
+
+            var_dump(22422);
+
+//            go(function () use ($chan, $wg) {
+                for ($i = 0; $i < 3; $i++) {
+                    $data = $chan->pop();
+                    var_dump($data);
+                }
+
+//            });
+//        });
+
+
+    }
+
+    public function exit()
+    {
+        go(function () {
+            try {
+                exit(123);
+            } catch (\Swoole\ExitException $e) {
+                var_dump($e->getMessage());
+            }
+        });
+    }
 }
