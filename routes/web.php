@@ -51,6 +51,10 @@ Route::any('/co/add1', 'SwooleController@add1');
 
 Route::any('/mysql/test', 'SwooleController@mysqlTest');
 
+Route::any('/channel/test', 'SwooleController@channel');
+
+Route::any('/exit/test', 'SwooleController@exit');
+
 
 // webSock
 Route::any('/webSocket/push', 'WebSocketController@push');
