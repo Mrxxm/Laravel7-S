@@ -37,25 +37,25 @@ Route::get('/redis/index', 'SwooleController@redis');
 
 // mysql连接测试库
 Route::get('/mysql/dxt', 'SwooleController@dxtMysql');
-
+// 聊天室onOpen方法
 Route::get('/chat/index', 'SwooleController@chat');
-
+// mysql-协程
 Route::get('/mysql/co', 'SwooleController@mysqlCo');
-
+// 协程
 Route::get('/co/run', 'SwooleController@coRun');
-
+// 大市场小程序登录接口
 Route::any('/user/login', 'LoginController@login');
-
+// 协程-管道pop方法挂起等待
 Route::any('/co/add', 'SwooleController@add');
 Route::any('/co/add1', 'SwooleController@add1');
 
 Route::any('/mysql/test', 'SwooleController@mysqlTest');
-
+// 管道
 Route::any('/channel/test', 'SwooleController@channel');
-
+// 退出
 Route::any('/exit/test', 'SwooleController@exit');
 
 
-// webSock
+// webSock 接口推送
 Route::any('/webSocket/push', 'WebSocketController@push');
 
