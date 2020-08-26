@@ -8,25 +8,25 @@ use Elasticsearch\ClientBuilder;
 
 class ElasticSearch
 {
-    protected static $instance;
+    protected $instance;
 
     public function __construct()
     {
         try {
-            static::$instance = ClientBuilder::create()
+            $this->instance = ClientBuilder::create()
                 ->setHosts(['127.0.0.1:8301'])
                 ->build();
         } catch (\Exception $exception) {
             throw new \Exception($exception->getMessage());
         }
 
-        if (empty(static::$instance)) {
+        if (empty($this->instance)) {
             throw new \Exception('实例为空');
         }
     }
 
     public function search(array $params)
     {
-        return static::$instance->search($params);
+        return $this->instance->search($params);
     }
 }
