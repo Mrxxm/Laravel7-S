@@ -59,3 +59,11 @@ Route::any('/exit/test', 'SwooleController@exit');
 // webSock 接口推送
 Route::any('/webSocket/push', 'WebSocketController@push');
 
+// elasticsearch
+Route::any('/es/get', 'ESController@get');
+Route::any('/es/search', 'ESController@search');
+Route::any('/es/searchPhrase', 'ESController@searchPhrase');
+
+
+
+
