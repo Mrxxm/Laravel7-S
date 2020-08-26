@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Utils\ES\ES;
 use Elasticsearch\ClientBuilder;
 use Illuminate\Http\Request;
 
@@ -71,6 +72,27 @@ class ESController
             ->setHosts(['127.0.0.1:8301'])
             ->build();
         $result = $client->search($params);
+
+        return response()->json($result);
+    }
+
+    public function ContainerES(Request $request)
+    {
+        $data = $request->all();
+
+        $params = [
+            "index"  => 'buy_index',
+            "type"   => 'buy',
+            "body"   => [
+                "query" => [
+                    "match_phrase" => [
+                        "introduce" => $data['introduce']
+                    ]
+                ]
+            ]
+        ];
+
+        $result =  ES::search($params);
 
         return response()->json($result);
     }
