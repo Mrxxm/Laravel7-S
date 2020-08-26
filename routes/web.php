@@ -63,6 +63,7 @@ Route::any('/webSocket/push', 'WebSocketController@push');
 Route::any('/es/get', 'ESController@get');
 Route::any('/es/search', 'ESController@search');
 Route::any('/es/searchPhrase', 'ESController@searchPhrase');
+Route::any('/es/ContainerES', 'ESController@ContainerES');
 
 
 
