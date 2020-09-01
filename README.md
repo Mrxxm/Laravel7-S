@@ -12,7 +12,7 @@
 [Swoole官方文档](https://wiki.swoole.com/#/)
 
 
-## ElasticSearch
+## ElasticSearch 7.x
 
 1.安装
 修改配置：
