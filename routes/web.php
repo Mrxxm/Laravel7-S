@@ -65,6 +65,8 @@ Route::any('/es/search', 'ESController@search');
 Route::any('/es/searchPhrase', 'ESController@searchPhrase');
 Route::any('/es/ContainerES', 'ESController@ContainerES');
 
+// openSearch
+Route::any('/os/osSearch', 'OSController@osSearch');
 
 
 
