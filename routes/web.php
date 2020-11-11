@@ -17,6 +17,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/swoole/getRealIp', 'SwooleController@getRealIp');
+
 // 定时器
 Route::get('/timer/test', 'SwooleController@timer');
 
