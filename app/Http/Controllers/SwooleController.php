@@ -13,6 +13,13 @@ use Swoole\Coroutine;
 
 class SwooleController
 {
+    public function getRealIp(Request $request)
+    {
+        $remoteIp = $request->header('x-real-ip');
+//        $remoteIp = $_SERVER;
+        return response()->json($remoteIp);
+    }
+
     public function timer(Request $request)
     {
         $count = 0;
