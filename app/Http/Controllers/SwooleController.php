@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 
+use ali\push;
 use App\Services\WebSocketService;
 use Co\MySQL;
 use Illuminate\Database\MySqlConnection;
@@ -13,6 +14,13 @@ use Swoole\Coroutine;
 
 class SwooleController
 {
+
+    public function push()
+    {
+        $res = (new push())->push();
+        return response()->json($res);
+    }
+
     public function getRealIp(Request $request)
     {
         $remoteIp = $request->header('x-real-ip');
@@ -23,7 +31,7 @@ class SwooleController
     public function timer(Request $request)
     {
         $count = 0;
-        \Swoole\Timer::tick(1000, function ($timerId, $count) {
+        \Swoole\Timer::tick(3000, function ($timerId, $count) {
             global $count;
             echo "Swoole 很棒\n";
             $count++;

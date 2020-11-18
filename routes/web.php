@@ -17,6 +17,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/swoole/push', 'SwooleController@push');
+
 Route::get('/swoole/getRealIp', 'SwooleController@getRealIp');
 
 // 定时器
